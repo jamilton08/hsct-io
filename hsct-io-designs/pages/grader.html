@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Runner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>HSCT Practicum Structure and Logic Grader</h1>
+
+  <div class="upload-section">
+    <!-- Name Fields -->
+    <div class="name-section">
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" placeholder="Enter your first name" />
+
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" placeholder="Enter your last name" />
+    </div>
+
+    <br /> <!-- Space between name fields and file uploads -->
+
+    <!-- File Upload Fields -->
+    <div class="file-section">
+        <label for="html-file">Upload Your HTML File:</label>
+        <input type="file" id="html-file" accept=".html" />
+        
+        <label for="css-file">Upload Your CSS File:</label>
+        <input type="file" id="css-file" accept=".css" />
+        
+        <label for="js-file">Upload Your JavaScript File:</label>
+        <input type="file" id="js-file" accept=".js" />
+    </div>
+
+    <button id="run-tests">Click Three Times For Accurate Results</button>
+</div>
+
+
+  <div class="output">
+    <h2>Grade Out Of 65</h2>
+    <pre id="test-results"></pre>
+  </div>
+
+  <script src="examples/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+</html>
