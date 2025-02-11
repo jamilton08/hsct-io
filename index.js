@@ -26,6 +26,20 @@ async function run(scores) {
     await client.connect();
     // Send a ping to confirm a successful connection
     await insertScore(client, scores)
+    
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+
+
+async function createUserInitial(user) {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await createUser(client, user)
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -35,6 +49,12 @@ async function run(scores) {
 
 async function insertScore(client, studentScore){
   const result = await client.db("student_scores").collection("calculator_practicum").insertOne(studentScore);
+
+  console.log(`result is with id : ${result.insertedId}`)
+}
+
+async function createUser(client, user){
+  const result = await client.db("hsct_io").collection("auth_user").insertOne(user);
 
   console.log(`result is with id : ${result.insertedId}`)
 }
@@ -56,6 +76,27 @@ app.post('/submit-score', (req, res) => {
   // Simulating saving data (e.g., to a database)
   const newData = { first_name : first_name, last_name : last_name, score : score };
   run(newData).catch(console.dir);
+  console.log('Data received:', newData);
+
+  // Responding with a success message
+  res.status(201).json({
+      message: 'Data submitted successfully!',
+      data: newData,
+  });
+});
+
+app.post('/create-user', (req, res) => {
+  console.log(res)
+  const { first_name, last_name, dob, school_email, password } = req.body;
+
+  // Validate the input
+  if (!first_name || !last_name || !dob || !school_email || !password) {
+      return res.status(400).json({ error: 'Invalid input data' });
+  }
+
+  // Simulating saving data (e.g., to a database)
+  const newData = { first_name : first_name, last_name : last_name, dob : dob, school_email : school_email, password : password };
+  createUserInitial(newData).catch(console.dir);
   console.log('Data received:', newData);
 
   // Responding with a success message
